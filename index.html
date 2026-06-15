@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Seu Convite Especial</title>
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f1bcf8 0%, #c844d4 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            overflow-y: auto; 
+        }
+
+        .wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 300px; 
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 140px; 
+            margin-bottom: 100px;
+            transition: margin 0.4s ease;
+        }
+
+        .envelope-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .envelope {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #f1bcf8;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-radius: 0 0 10px 10px;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+
+        .flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 110px solid #e09ee9;
+            transform-origin: top;
+            transition: transform 0.4s ease-in-out, z-index 0.2s;
+            z-index: 5;
+        }
+
+        .pocket {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 150px solid #f1bcf8;
+            border-right: 150px solid #f1bcf8;
+            border-bottom: 100px solid #f1bcf8;
+            z-index: 4;
+        }
+
+
+        .letter {
+            position: absolute;
+            bottom: 10px;
+            left: 5%;
+            width: 90%; 
+            height: auto; 
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 18px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 3; 
+            
+
+            transform: translateY(105%) scale(0.6); 
+            opacity: 0;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease, width 0.4s ease;
+            overflow: hidden; 
+        }
+
+
+        .letter-img {
+            width: 100%;
+            height: auto;
+            max-height: 240px;
+            object-fit: contain;
+            display: block;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .letter h1 {
+            font-size: clamp(1.1rem, 4vw, 1.4rem); 
+            color: #f1bcf8;
+            margin-bottom: 8px;
+            font-family: 'Georgia', serif;
+        }
+
+        .letter p {
+            font-size: clamp(0.85rem, 3vw, 0.95rem);
+            color: #333;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+
+        .maps-link {
+            display: inline-block;
+            margin: 8px 0;
+            padding: 10px 18px;
+            background-color: #d952eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+            font-weight: bold;
+            transition: background 0.2s;
+            width: 100%;
+            max-width: 260px;
+        }
+        
+        .maps-link:hover {
+            background-color: #a50ec4;
+        }
+
+        .open-btn {
+            position: absolute;
+            bottom: -65px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 30px;
+            background-color: #f1bcf8;
+            color: rgb(3, 3, 3);
+            border: none;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+
+        .envelope-wrapper.open .envelope {
+            overflow: visible;
+        }
+
+        .envelope-wrapper.open .flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+
+        .envelope-wrapper.open .letter {
+            position: relative; 
+            width: 92vw;
+            max-width: 370px; 
+            left: 50%;
+            transform: translate(-50%, -245px) scale(1); 
+            opacity: 1;
+            z-index: 100;
+        }
+
+        .envelope-wrapper.open .open-btn {
+            background-color: #f1bcf8;
+            transform: translateX(-50%) translateY(270px); 
+        }
+
+        @media (max-width: 360px) {
+            .wrapper {
+                margin-top: 160px;
+            }
+            .envelope-wrapper.open .letter {
+                transform: translate(-50%, -265px) scale(0.95);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <div class="envelope-wrapper" id="invitationContainer">
+            
+            <div class="flap"></div>
+            
+            <div class="envelope">
+                <div class="pocket"></div>
+                
+                <div class="letter">
+                    <img src="Foto0407.png" alt="Arraiá da Rafaelle" class="letter-img">
+                    
+                    <h1>Você foi Convidado!</h1>
+                    <p>Venha comemorar esse dia especial comigo!</p>
+                    
+                    <p><strong>Data:</strong> 04 de Julho de 2026</p>
+                    <p><strong>Horário:</strong> 10 Horas</p>
+                    
+                    <p><strong>📍 Local:</strong></p><p style="font-size: 0.85rem; color: #666; margin-top: -4px; margin-bottom: 6px;">Rua Fauna, Nº 05 - Comunidade dos Lopes</p>
+                    
+                    <a href="https://maps.app.goo.gl/8uD9Aya22xywKocS6" target="_blank" class="maps-link" id="mapsLink">
+                        📍 Clique para abrir a localização
+                    </a>
+                    
+                    <p style="margin-top: 10px; font-weight: bold; color: #f1bcf8; font-size: 0.95rem;">
+                         Obs: Traga sua bebida.
+                    </p>
+                </div>
+            </div>
+            
+            <button class="open-btn" id="actionBtn">Tocar para Abrir</button>
+            
+        </div>
+    </div>
+
+    <script>
+        const container = document.getElementById('invitationContainer');
+        const btn = document.getElementById('actionBtn');
+        const mapsLink = document.getElementById('mapsLink');
+
+        function toggleEnvelope(e) {
+            if (e.target === mapsLink) {
+                return;
+            }
+
+            e.preventDefault();
+            e.stopPropagation(); 
+            
+            const isOpen = container.classList.toggle('open');
+            
+            if (isOpen) {
+                btn.textContent = "Tocar para Fechar";
+            } else {
+                btn.textContent = "Tocar para Abrir";
+            }
+        }
+
+        btn.addEventListener('click', toggleEnvelope);
+        btn.addEventListener('touchstart', toggleEnvelope, { passive: false });
+
+        container.addEventListener('click', toggleEnvelope);
+        container.addEventListener('touchstart', toggleEnvelope, { passive: false });
+    </script>
+</body>
+</html>
